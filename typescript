@@ -1,0 +1,121 @@
+Script started on Tue Mar 24 13:44:36 2026
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  node /tmp/inspect_card.js[?2004l
+node:internal/modules/cjs/loader:1424
+  throw err;
+  ^
+
+Error: Cannot find module 'playwright'
+Require stack:
+- /private/tmp/inspect_card.js
+[90m    at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)[39m
+[90m    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)[39m
+[90m    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1227:37)[39m
+[90m    at TracingChannel.traceSync (node:diagnostics_channel:328:14)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1504:12)[39m
+[90m    at require (node:internal/modules/helpers:152:16)[39m
+    at Object.<anonymous> (/private/tmp/inspect_card.js:1:22)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1761:14)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [ [32m'/private/tmp/inspect_card.js'[39m ]
+}
+
+Node.js v24.12.0
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  cd "/Users/adamkrolak/Downloads/tes [Ktting play" && node /tmp/inspect_card.js[?2004l
+node:internal/modules/cjs/loader:1424
+  throw err;
+  ^
+
+Error: Cannot find module '@playwright/test'
+Require stack:
+- /private/tmp/inspect_card.js
+[90m    at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)[39m
+[90m    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)[39m
+[90m    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1227:37)[39m
+[90m    at TracingChannel.traceSync (node:diagnostics_channel:328:14)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1504:12)[39m
+[90m    at require (node:internal/modules/helpers:152:16)[39m
+    at Object.<anonymous> (/private/tmp/inspect_card.js:1:22)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1761:14)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [ [32m'/private/tmp/inspect_card.js'[39m ]
+}
+
+Node.js v24.12.0
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  cp /tmp/inspect_card.js "/Users/ada [Kmmkrolak/Downloads/testing play/inspect_card.js" && cd "/Users/adamkrolak/Downloa [Kdds/testing play" && sed -i '' "s|@playwright/test|$(pwd)/node_modules/@playwrigh [Ktt/test|" inspect_card.js && node inspect_card.js[?2004l
+=== 4th Card Footer HTML ===
+<div class="relative -mt-1 flex w-full flex-row justify-between gap-2 py-1"></div>
+
+=== h-11 count ===
+[33m0[39m
+
+=== Accessories (.w-min in 4th child) ===
+[33m1[39m
+
+=== Compare btn ===
+[33m0[39m
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  cd "/Users/adamkrolak/Downloads/tes [Ktting play" && npx playwright test tests/inspect.spec.ts --reporter=list 2>&1[?2004l
+⠙[1G[0K
+[2mRunning [22m1[2m test using [22m1[2m worker[22m
+
+     [2m1 [22m[2m[chromium] › tests/inspect.spec.ts:3:5 › inspect card DOM[22m
+^C[1A[2K[0G  [31m✘[39m  [2m1 [22m[31m[chromium] › tests/inspect.spec.ts:3:5 › inspect card DOM[39m[2m (6.2s)[22m[1E
+
+[31m  1) [chromium] › tests/inspect.spec.ts:3:5 › inspect card DOM [2m─────────────────[22m[39m
+
+    [31mTest was interrupted.[39m
+
+    Error: page.waitForTimeout: Test ended.
+
+    [0m [90m  8 |[39m   } [36mcatch[39m (e) {}
+     [90m  9 |[39m
+    [31m[1m>[22m[39m[90m 10 |[39m   [36mawait[39m page[33m.[39mwaitForTimeout([35m2000[39m)[33m;[39m
+     [90m    |[39m              [31m[1m^[22m[39m
+     [90m 11 |[39m
+     [90m 12 |[39m   [36mconst[39m card4 [33m=[39m page[33m.[39mlocator([32m'[data-slot="card"]'[39m)[33m.[39mnth([35m3[39m)[33m;[39m
+     [90m 13 |[39m   [36mconst[39m footer [33m=[39m card4[33m.[39mlocator([32m'[data-slot="card-footer"]'[39m)[33m;[39m[0m
+    [2m    at /Users/adamkrolak/Downloads/testing play/tests/inspect.spec.ts:10:14[22m
+
+[33m  1 interrupted[39m
+[33m    [chromium] › tests/inspect.spec.ts:3:5 › inspect card DOM [2m──────────────────[22m[39m
+ echo "waiting..."
+⠙[1G[0K[1mnpm[22m [96mnotice[39m
+[1mnpm[22m [96mnotice[39m New [33mminor[39m version of npm available! [33m11.6.2[39m -> [34m11.12.0[39m
+[1mnpm[22m [96mnotice[39m Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.12.0[39m
+[1mnpm[22m [96mnotice[39m To update run: [4mnpm install -g npm@11.12.0[24m
+[1mnpm[22m [96mnotice[39m
+⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  echo "waiting..."[?2004l
+waiting...
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  cd "/Users/adamkrolak/Downloads/tes [Ktting play" && npx playwright test tests/inspect.spec.ts --reporter=list --timeou [Ktt=60000 2>&1[?2004l
+⠙[1G[0K
+[2mRunning [22m1[2m test using [22m1[2m worker[22m
+
+     [2m1 [22m[2m[chromium] › tests/inspect.spec.ts:5:5 › inspect card DOM[22m
+=== 4th Card Footer HTML ===
+<div class="relative -mt-1 flex w-full flex-row justify-between gap-2 py-1"></div>
+=== h-11 count ===
+[33m0[39m
+=== Price area (any button or price-like element) ===
+div[0] class="relative -mt-1 flex w-full flex-row justify-between gap-2 py-1" text=""
+=== Accessories ===
+[33m1[39m
+=== Compare btn ===
+[33m0[39m
+[13A[2K[0G  [32m✓[39m  [2m1 [22m[chromium] › tests/inspect.spec.ts:5:5 › inspect card DOM[2m (7.8s)[22m[13E
+[32m  1 passed[39m[2m (9.9s)[22m
+⠙[1G[0K[1mnpm[22m [96mnotice[39m
+[1mnpm[22m [96mnotice[39m New [33mminor[39m version of npm available! [33m11.6.2[39m -> [34m11.12.0[39m
+[1mnpm[22m [96mnotice[39m Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.12.0[39m
+[1mnpm[22m [96mnotice[39m To update run: [4mnpm install -g npm@11.12.0[24m
+[1mnpm[22m [96mnotice[39m
+⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h  cd "/Users/adamkrolak/Downloads/tes [Ktting play" && rm -f tests/inspect.spec.ts tests/inspect2.spec.ts tests/inspect3. [Ksspec.ts tests/inspect4.spec.ts inspect_card.js[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jadamkrolak@Adams-MacBook-Pro testing play % [K[?2004h
