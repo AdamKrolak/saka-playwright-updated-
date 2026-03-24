@@ -109,11 +109,11 @@ test.describe("Smoke test for Homepage.", () => {
     page,
     homePage,
   }) => {
-    await page.evaluate(() => window.scrollTo(0, 1000));
+    await homePage.electricCar1().scrollIntoViewIfNeeded();
     await expect(
       homePage.homePageMid().getByRole("region", { name: "Electric cars" }),
     ).toBeVisible();
-    await homePage.electricCar1().click({ force: true });
+    await homePage.electricCar1().click();
     await expect(page).toHaveURL(/https:\/\/saka\.fi\/en\/car\//);
   });
 
@@ -121,14 +121,14 @@ test.describe("Smoke test for Homepage.", () => {
     page,
     homePage,
   }) => {
-    await page.evaluate(() => window.scrollTo(0, 1500));
+    await homePage.famillyCar2().scrollIntoViewIfNeeded();
     await expect(
       homePage.homePageMid().getByRole("region", { name: "Family cars" }),
     ).toBeVisible();
     await expect(
       homePage.homePageMid().getByRole("region", { name: "Electric cars" }),
     ).toBeVisible();
-    await homePage.famillyCar2().click({ force: true });
+    await homePage.famillyCar2().click();
     await expect(page).toHaveURL(/https:\/\/saka\.fi\/en\/car\//);
   });
 
@@ -189,12 +189,12 @@ test.describe("Smoke test for Homepage.", () => {
     page,
     homePage,
   }) => {
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await homePage.newsletter().scrollIntoViewIfNeeded();
     await expect(homePage.newsletter()).toBeVisible();
     await homePage.newsletter().click();
     await homePage.newsletter().fill("test@email.com");
     await homePage.newsletterBtn().click({ force: true });
-    await expect(homePage.newsletterMsg()).toBeVisible();
+    await expect(page.getByRole("alert")).toBeVisible({ timeout: 10000 });
   });
 
   test("Verify social media links", async ({ page, homePage }) => {

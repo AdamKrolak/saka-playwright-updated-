@@ -129,9 +129,7 @@ test("Verify events triggered when user navigates from search page to car page",
   page,
   homePage,
   navigationMenu,
-  searchSuggestions,
   searchPage,
-  categoryPage,
 }) => {
   page.on("pageerror", (err) => {
     if (
@@ -154,7 +152,10 @@ test("Verify events triggered when user navigates from search page to car page",
   await expect(searchPage.car1()).toContainText("Volvo");
 
   // Get the first Volvo car link and navigate directly
-  const carHref = await categoryPage.car1().getAttribute("href");
+  const carHref = await searchPage
+    .car1()
+    .locator('a[href*="/car/"]')
+    .getAttribute("href");
   expect(carHref).toBeTruthy();
   await page.goto(`https://saka.fi${carHref}`);
   await page.waitForLoadState("networkidle");
