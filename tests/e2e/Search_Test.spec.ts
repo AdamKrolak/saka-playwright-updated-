@@ -128,7 +128,8 @@ test.describe("Smoke test for the search", () => {
     await searchSuggestions.searchInput().fill("volvo");
     await searchSuggestions.searchInput().press("Enter");
     await page.waitForTimeout(2000);
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.evaluate(() => window.scrollTo(0, 2000));
+    await page.waitForTimeout(2000);
     await searchPage.nextPage().waitFor({ state: "visible" });
     await searchPage.nextPage().click({ force: true });
     await page.waitForTimeout(2000);
