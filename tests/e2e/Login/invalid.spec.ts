@@ -5,7 +5,7 @@ import { acceptCookies } from "../../fixtures/cookies.fixture";
 import { login } from "../../fixtures/login.fixture";
 import { LoginPage } from "../../pages/login.page";
 
-test.describe("Login with invalid credentials", () => {
+test.describe("Login with invalid credentials, an error message is displayed", () => {
   let loginPage: LoginPage;
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -13,7 +13,7 @@ test.describe("Login with invalid credentials", () => {
     await acceptCookies(page);
   });
 
-  test("The user is not able to login using an invalid email", async ({
+  test("The user is not able to login using an invalid email, an error message is displayed", async ({
     page,
   }) => {
     // Actions
@@ -22,7 +22,7 @@ test.describe("Login with invalid credentials", () => {
     await expect(loginPage.errorMessage).toContainText(messages.loginError);
   });
 
-  test("The user is not able to login using an invalid password", async ({
+  test("The user is not able to login using an invalid password, an error message is displayed", async ({
     page,
   }) => {
     // Actions

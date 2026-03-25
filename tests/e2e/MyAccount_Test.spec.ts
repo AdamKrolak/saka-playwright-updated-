@@ -1,4 +1,7 @@
 import { test, expect } from "../fixtures/fixtures";
+import { acceptCookies } from "../fixtures/cookies.fixture";
+import { userData } from "../test-data/emailTest.data";
+import { login } from "../fixtures/login.fixture";
 
 // This spec uses the 'authenticated' project which loads saved login storageState.
 // The beforeEach login steps from the Cypress original are replaced by storageState.
@@ -14,7 +17,9 @@ test.beforeEach(async ({ page }) => {
     }
   });
   // Navigate to My Saka — already authenticated via storageState
-  await page.goto("https://saka.fi/fi/oma-saka");
+  await page.goto("/en");
+  await acceptCookies(page);
+  await login(page, userData.validEmail, userData.validPassword);
 });
 
 test.describe("Smoke test for My Saka Page.", () => {
