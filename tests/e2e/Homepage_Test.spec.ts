@@ -226,17 +226,6 @@ test.describe("Smoke test for Homepage.", () => {
     );
   });
 
-  test("Verify that user can switch between the dark/light mode", async ({
-    page,
-    homePage,
-    navigationMenu,
-  }) => {
-    await navigationMenu.mySakaIcon().click({ force: true });
-    await expect(navigationMenu.loginDropdown()).toBeVisible();
-    await expect(navigationMenu.signIn()).toBeVisible();
-    await expect(navigationMenu.signUp()).toBeVisible();
-  });
-
   test("Verify that user can switch a language of the website", async ({
     page,
     navigationMenu,

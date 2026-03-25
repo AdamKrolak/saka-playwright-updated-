@@ -23,17 +23,34 @@ export class SalesLocationPage {
     const dropdown = this.locationDropdown();
     const listbox = this.locationDropdownList();
 
+    // Dismiss cookie banner if it reappeared or wasn't fully dismissed
+    await this.dismissCookieBannerIfPresent();
+
     await dropdown.scrollIntoViewIfNeeded();
     await dropdown.click();
 
     try {
       await listbox.waitFor({ state: "visible", timeout: 3000 });
     } catch {
+      await this.dismissCookieBannerIfPresent();
       await dropdown.click();
       await listbox.waitFor({ state: "visible", timeout: 5000 });
     }
 
     await this.page.getByRole("option", { name: locationName }).click();
+  }
+
+  private async dismissCookieBannerIfPresent(): Promise<void> {
+    const cookieDialog = this.page.locator("#CybotCookiebotDialog");
+    if (await cookieDialog.isVisible({ timeout: 500 }).catch(() => false)) {
+      const allowBtn = this.page.getByRole("button", { name: "Allow all" });
+      if (await allowBtn.isVisible({ timeout: 500 }).catch(() => false)) {
+        await allowBtn.click();
+        await cookieDialog
+          .waitFor({ state: "hidden", timeout: 5000 })
+          .catch(() => {});
+      }
+    }
   }
 
   pageTitle(): Locator {
