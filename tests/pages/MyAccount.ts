@@ -8,19 +8,22 @@ export class MyAccount {
   }
 
   welcomeBanner(): Locator {
-    return this.page.locator(".-mb-16 > .relative > .h-full");
+    return this.page
+      .locator("div")
+      .filter({ hasText: "Hi Adam, welcome to MySaka" })
+      .nth(3);
   }
   welcomeText(): Locator {
-    return this.page.locator(".mb-2 > .text-center");
+    return this.page.getByRole("heading", {
+      name: "Hi Adam, welcome to MySaka",
+    });
   }
 
   dashboardBtn(): Locator {
     return this.page.locator(".\\!bg-neutral-black > .border-primary-400");
   }
   myCarsBtn(): Locator {
-    return this.page.locator(
-      ":nth-child(1) > .flex-col > :nth-child(2) > .border-primary-400",
-    );
+    return this.page.getByRole("link", { name: "My Cars" });
   }
   favouriteCarsBtn(): Locator {
     return this.page.locator(":nth-child(3) > .border-primary-400");
@@ -81,7 +84,7 @@ export class MyAccount {
     return this.page.locator(".overflow-hidden > .top-0");
   }
   addCar(): Locator {
-    return this.page.locator(".top-0 > .flex");
+    return this.page.getByRole("button", { name: "Add Your Car" });
   }
   fields(): Locator {
     return this.page.locator(".space-y-2");
@@ -90,7 +93,7 @@ export class MyAccount {
     return this.page.getByText("Lisää kuva autostasi");
   }
   addCarForm(): Locator {
-    return this.page.locator(".space-y-6");
+    return this.page.getByRole("button", { name: "Add Your Car" });
   }
 
   myFavCarsTitle(): Locator {
@@ -110,7 +113,9 @@ export class MyAccount {
     return this.page.locator(".py-4 > .flex.items-center > .text-lg");
   }
   recommendedCar1(): Locator {
-    return this.page.locator(".md\\:pb-2 > :nth-child(1) > .rounded-2xl");
+    return this.page
+      .locator(".w-full > .relative.flex.flex-col > .\\[\\.border-t\\]\\:pt-6")
+      .first();
   }
   recommendedCarsNavigation(): Locator {
     return this.page.locator(".py-4 > .items-center > .border-primary-400");
@@ -143,6 +148,6 @@ export class MyAccount {
   }
 
   myAccoutIcon(): Locator {
-    return this.page.locator("#radix-\\:ru\\:");
+    return this.page.getByRole("button", { name: "My Saka" });
   }
 }

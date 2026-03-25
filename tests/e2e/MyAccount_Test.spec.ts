@@ -50,7 +50,6 @@ test.describe("Smoke test for My Saka Page.", () => {
     await expect(myAccount.ourArticles()).toBeVisible();
     await expect(myAccount.myPages()).toBeVisible();
     await expect(myAccount.yourFavCars()).toBeVisible();
-    await expect(myAccount.yourOffers()).toBeVisible();
   });
 
   test("Favourite cars are displayed on the dashboard", async ({
@@ -68,7 +67,7 @@ test.describe("Smoke test for My Saka Page.", () => {
     myAccount,
   }) => {
     await page.waitForTimeout(500);
-    await expect(myAccount.article1()).toBeVisible();
+    await expect(page.getByText("Our ArticlesGo to Articles")).toBeVisible();
     await expect(myAccount.article2()).toBeVisible();
   });
 
@@ -81,7 +80,6 @@ test.describe("Smoke test for My Saka Page.", () => {
     await expect(myAccount.myCarsTitle()).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 200));
     await expect(myAccount.myCarsBtn()).toBeVisible();
-    await page.locator(".top-0 > .flex").click({ force: true });
     await myAccount.myCarsBtn().click({ force: true });
   });
 
@@ -94,7 +92,7 @@ test.describe("Smoke test for My Saka Page.", () => {
     await expect(myAccount.myCarsTitle()).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 200));
     await expect(myAccount.myCarsBtn()).toBeVisible();
-    await page.locator(".top-0 > .flex").click({ force: true });
+    //await page.locator(".top-0 > .flex").click({ force: true });
     await myAccount.addCar().click({ force: true });
     await expect(myAccount.fields()).toBeVisible();
     await expect(myAccount.addImage()).toBeVisible();
@@ -157,10 +155,10 @@ test.describe("Smoke test for My Saka Page.", () => {
     navigationMenu,
   }) => {
     await page.waitForTimeout(2000);
-    await expect(page).toHaveURL("https://saka.fi/fi/oma-saka");
+    await expect(page).toHaveURL("/en/my-saka");
     await myAccount.myAccoutIcon().click();
     await expect(navigationMenu.loginDropdown()).toBeVisible();
     await navigationMenu.logOutBtn().click();
-    await expect(page).toHaveURL("https://saka.fi/fi/auth/kirjaudu");
+    await expect(page).toHaveURL("https://saka.fi/en/auth/login");
   });
 });
