@@ -87,27 +87,23 @@ export class MyAccount {
     return this.page.getByRole("button", { name: "Add Your Car" });
   }
   fields(): Locator {
-    return this.page.locator(".space-y-2");
+    return this.page.getByText("License PlateMakeAlfa");
   }
   addImage(): Locator {
-    return this.page.getByText("Lisää kuva autostasi");
-  }
-  addCarForm(): Locator {
-    return this.page.getByRole("button", { name: "Add Your Car" });
+    return this.page
+      .locator("div")
+      .filter({ hasText: /^Add A Picture Of Your Car$/ })
+      .nth(1);
   }
 
   myFavCarsTitle(): Locator {
     return this.page.locator(".my-8");
   }
   myFavCar1(): Locator {
-    return this.page.locator(
-      ":nth-child(2) > :nth-child(2) > .gap-4 > :nth-child(1)",
-    );
+    return this.page.locator(".absolute.left-0.top-0").first();
   }
   myFavCar2(): Locator {
-    return this.page.locator(
-      ":nth-child(2) > :nth-child(2) > .gap-4 > :nth-child(2)",
-    );
+    return this.page.locator(".absolute.left-0.top-0").nth(1);
   }
   recommendedCarsTitle(): Locator {
     return this.page.locator(".py-4 > .flex.items-center > .text-lg");
@@ -125,19 +121,19 @@ export class MyAccount {
     return this.page.locator(".mb-8");
   }
   firstName(): Locator {
-    return this.page.locator("#\\:r1o\\:-form-item");
+    return this.page.getByText("First name");
   }
   lastName(): Locator {
-    return this.page.locator("#\\:r1p\\:-form-item");
+    return this.page.getByText("Last name");
   }
   phoneNumber(): Locator {
-    return this.page.locator("#\\:r1q\\:-form-item");
+    return this.page.getByText("Phone number");
   }
   email(): Locator {
-    return this.page.locator(":nth-child(4) > .h-12");
+    return this.page.getByText("Email");
   }
   editProfileBtn(): Locator {
-    return this.page.locator(":nth-child(4) > .h-12");
+    return this.page.getByText("Edit Profile");
   }
 
   offersTitle(): Locator {
@@ -149,5 +145,9 @@ export class MyAccount {
 
   myAccoutIcon(): Locator {
     return this.page.getByRole("button", { name: "My Saka" });
+  }
+
+  addCarForm(): Locator {
+    return this.page.getByRole("button", { name: "Add Your Car" });
   }
 }

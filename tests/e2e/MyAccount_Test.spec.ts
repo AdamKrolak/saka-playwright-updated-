@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   });
   // Navigate to My Saka — already authenticated via storageState
   await page.goto("/en");
-  //await acceptCookies(page).catch(() => {});
+  //  await acceptCookies(page).catch(() => {});
   await login(page, userData.validEmail, userData.validPassword);
 });
 
@@ -123,11 +123,11 @@ test.describe("Smoke test for My Saka Page.", () => {
     await page
       .locator(":nth-child(4) > .border-primary-400")
       .click({ force: true });
-    await page
-      .locator(
-        ":nth-child(1) > .flex-col > :nth-child(2) > .border-primary-400",
-      )
-      .click({ force: true });
+    // await page
+    //   .locator(
+    //     ":nth-child(1) > .flex-col > :nth-child(2) > .border-primary-400",
+    //   )
+    //   .click({ force: true });
     await page.evaluate(() => window.scrollTo(0, 100));
     await myAccount.myProfileBtn().click({ force: true });
     await page.waitForTimeout(500);
