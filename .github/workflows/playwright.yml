@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "30 5 * * *"
+    - cron: "30 13 * * *"
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -33,3 +34,27 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Notify Slack
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: cypress-test-saka-prj
+          SLACK_USERNAME: Cypress Test Result
+          SLACK_TITLE: Cypress test results for Saka.fi
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE_ON_FAILURE: "@Adam Krolak, please check the test results :pepebeaten:"
+          SLACK_ICON: https://saka.fi/_next/image?url=%2Fassets%2Flogo%2Fsaka-logo.webp&w=96&q=75
+
+      - name: Notify Slack
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: cypress-test-saka-prj
+          SLACK_USERNAME: Cypress Test Result
+          SLACK_TITLE: Cypress test results for Saka.fi
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE_ON_SUCCESS: "Everything work as expected :rocket:  :pepe-clap:"
+          SLACK_ICON: https://saka.fi/_next/image?url=%2Fassets%2Flogo%2Fsaka-logo.webp&w=96&q=75
