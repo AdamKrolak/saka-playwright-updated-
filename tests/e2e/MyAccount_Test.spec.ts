@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   });
   // Navigate to My Saka — already authenticated via storageState
   await page.goto("/en");
-  await acceptCookies(page).catch(() => {});
+  //await acceptCookies(page).catch(() => {});
   await login(page, userData.validEmail, userData.validPassword);
 });
 
