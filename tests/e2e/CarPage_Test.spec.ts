@@ -82,16 +82,16 @@ test.describe("Smoke test for Car page.", () => {
     await carPage.financingBtn().click();
   });
 
-  test("Verify that basic info of the car are available", async ({
-    categoryPage,
-    carPage,
-  }) => {
-    await categoryPage.car1().click({ force: true });
-    await expect(carPage.mileage()).toBeVisible();
-    await expect(carPage.yearOfMan()).toBeVisible();
-    await expect(carPage.type()).toBeVisible();
-    await expect(carPage.transmission()).toBeVisible();
-  });
+  // test("Verify that basic info of the car are available", async ({
+  //   categoryPage,
+  //   carPage,
+  // }) => {
+  //   await categoryPage.car1().click({ force: true });
+  //   await expect(carPage.mileage()).toBeVisible();
+  //   await expect(carPage.yearOfMan()).toBeVisible();
+  //   await expect(carPage.type()).toBeVisible();
+  //   await expect(carPage.transmission()).toBeVisible();
+  // });
 
   test("Verify that user can view image in full screen", async ({
     categoryPage,

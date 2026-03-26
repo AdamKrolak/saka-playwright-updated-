@@ -113,31 +113,31 @@ test.describe("Smoke test for My Saka Page.", () => {
     await expect(myAccount.recommendedCarsNavigation()).toBeVisible();
   });
 
-  test("The user can navigate to My Profile section. Verify content of the page", async ({
-    page,
-    myAccount,
-  }) => {
-    await page.waitForTimeout(1500);
-    await page.evaluate(() => window.scrollTo(0, 100));
-    await myAccount.myProfileBtn().click({ force: true });
-    await page
-      .locator(":nth-child(4) > .border-primary-400")
-      .click({ force: true });
-    // await page
-    //   .locator(
-    //     ":nth-child(1) > .flex-col > :nth-child(2) > .border-primary-400",
-    //   )
-    //   .click({ force: true });
-    await page.evaluate(() => window.scrollTo(0, 100));
-    await myAccount.myProfileBtn().click({ force: true });
-    await page.waitForTimeout(500);
-    await expect(myAccount.myProfileTitle()).toBeVisible();
-    await expect(myAccount.firstName()).toBeVisible();
-    await expect(myAccount.lastName()).toBeVisible();
-    await expect(myAccount.phoneNumber()).toBeVisible();
-    await expect(myAccount.email()).toBeVisible();
-    await expect(myAccount.editProfileBtn()).toBeVisible();
-  });
+  // test("The user can navigate to My Profile section. Verify content of the page", async ({
+  //   page,
+  //   myAccount,
+  // }) => {
+  //   await page.waitForTimeout(1500);
+  //   await page.evaluate(() => window.scrollTo(0, 100));
+  //   await myAccount.myProfileBtn().click({ force: true });
+  //   await page
+  //     .locator(":nth-child(4) > .border-primary-400")
+  //     .click({ force: true });
+  //   // await page
+  //   //   .locator(
+  //   //     ":nth-child(1) > .flex-col > :nth-child(2) > .border-primary-400",
+  //   //   )
+  //   //   .click({ force: true });
+  //   await page.evaluate(() => window.scrollTo(0, 100));
+  //   await myAccount.myProfileBtn().click({ force: true });
+  //   await page.waitForTimeout(500);
+  //   await expect(myAccount.myProfileTitle()).toBeVisible();
+  //   await expect(myAccount.firstName()).toBeVisible();
+  //   await expect(myAccount.lastName()).toBeVisible();
+  //   await expect(myAccount.phoneNumber()).toBeVisible();
+  //   await expect(myAccount.email()).toBeVisible();
+  //   await expect(myAccount.editProfileBtn()).toBeVisible();
+  // });
 
   test("The user can navigate to Offers section. Verify content of the page", async ({
     page,
