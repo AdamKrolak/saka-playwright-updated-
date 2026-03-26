@@ -10,7 +10,7 @@ test.describe("Login with invalid credentials, an error message is displayed", (
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     await page.goto("/en");
-    await acceptCookies(page);
+    // await acceptCookies(page);
   });
 
   test("The user is not able to login using an invalid email, an error message is displayed", async ({

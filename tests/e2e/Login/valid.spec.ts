@@ -9,7 +9,7 @@ test.describe("Login with valid credentials", () => {
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     await page.goto("/en");
-    await acceptCookies(page);
+    //await acceptCookies(page);
   });
   test("The user is able to login using a valid email and password", async ({
     page,
