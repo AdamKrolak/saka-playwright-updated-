@@ -41,8 +41,8 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: cypress-test-saka-prj
-          SLACK_USERNAME: Cypress Test Result
-          SLACK_TITLE: Cypress test results for Saka.fi
+          SLACK_USERNAME: Playwright Test Result
+          SLACK_TITLE: Playwright automated test results for Saka.fi
           SLACK_COLOR: ${{ job.status }}
           SLACK_MESSAGE_ON_FAILURE: "@Adam Krolak, please check the test results :pepebeaten:"
           SLACK_ICON: https://saka.fi/_next/image?url=%2Fassets%2Flogo%2Fsaka-logo.webp&w=96&q=75
@@ -53,8 +53,8 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: cypress-test-saka-prj
-          SLACK_USERNAME: Cypress Test Result
-          SLACK_TITLE: Cypress test results for Saka.fi
+          SLACK_USERNAME: Playwright Test Result
+          SLACK_TITLE: Playwright automated test results for Saka.fi
           SLACK_COLOR: ${{ job.status }}
           SLACK_MESSAGE_ON_SUCCESS: "Everything work as expected :rocket:  :pepe-clap:"
           SLACK_ICON: https://saka.fi/_next/image?url=%2Fassets%2Flogo%2Fsaka-logo.webp&w=96&q=75

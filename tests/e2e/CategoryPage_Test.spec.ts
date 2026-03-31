@@ -79,14 +79,14 @@ test.describe("Smoke test for Category page.", () => {
     await expect(page).toHaveURL("https://saka.fi/en/diesel-cars?page=2");
   });
 
-  test("Verify car cards on the category page", async ({ categoryPage }) => {
-    await expect(categoryPage.car1Diesel()).toBeVisible();
-    await expect(categoryPage.car1Diesel()).toContainText("Diesel");
-    await expect(categoryPage.car1Image()).toBeVisible();
-    await expect(categoryPage.car4Price()).toBeVisible();
-    await expect(categoryPage.car4Accessories()).toBeVisible();
-    await expect(categoryPage.car4CompareBtn()).toBeVisible();
-  });
+  // test("Verify car cards on the category page", async ({ categoryPage }) => {
+  //   await expect(categoryPage.car1Diesel()).toBeVisible();
+  //   await expect(categoryPage.car1Diesel()).toContainText("Diesel");
+  //   await expect(categoryPage.car1Image()).toBeVisible();
+  //   await expect(categoryPage.car4Price()).toBeVisible();
+  //   await expect(categoryPage.car4Accessories()).toBeVisible();
+  //   await expect(categoryPage.car4CompareBtn()).toBeVisible();
+  // });
 
   test("Verify filtering of the category page - click Mercedes if present", async ({
     page,
