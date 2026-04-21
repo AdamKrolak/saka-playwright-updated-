@@ -89,7 +89,7 @@ test.describe("Smoke test for Homepage.", () => {
     await expect(homePage.heroBanner()).toBeVisible();
     await expect(homePage.titleBanner()).toBeVisible();
     await expect(homePage.titleBanner()).toContainText(
-      "Finland's largest used car dealer",
+      "Trusted Car Dealership",
     );
   });
 

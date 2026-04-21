@@ -22,7 +22,7 @@ export class SearchPage {
     return this.page.locator(".mx-auto > .flex-row > :nth-child(2) > .flex");
   }
   nextPage(): Locator {
-    return this.page.locator(":nth-child(3) > .border-primary-400");
+    return this.page.getByRole("link", { name: "Go to next page" });
   }
 
   car1(): Locator {
