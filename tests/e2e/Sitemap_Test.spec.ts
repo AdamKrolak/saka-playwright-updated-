@@ -72,7 +72,7 @@ test.describe("Meta tags validation", () => {
     await homePage.acceptAllCookies();
     await page.goto("https://saka.fi/en");
 
-    await expect(page).toHaveTitle(/Finland's largest used car dealer/);
+    await expect(page).toHaveTitle(/Trusted Car Dealership | 3500\+ Used Cars/);
 
     await expect(siteMap.description()).toHaveAttribute(
       "content",
