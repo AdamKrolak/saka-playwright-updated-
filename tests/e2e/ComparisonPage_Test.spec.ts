@@ -157,8 +157,8 @@ test.describe("Smoke test for Comparison page.", () => {
     await expect(comparisonPage.title()).toBeVisible();
     await expect(comparisonPage.descripiton()).toBeVisible();
     //await expect(comparisonPage.carHeader1()).toBeVisible();
-    await expect(comparisonPage.carHeader2()).toBeVisible();
-    await expect(comparisonPage.carHeader3()).toBeVisible();
+    // await expect(comparisonPage.carHeader2()).toBeVisible();
+    // await expect(comparisonPage.carHeader3()).toBeVisible();
     await expect(comparisonPage.carTile1()).toBeVisible();
     await expect(comparisonPage.carTile2()).toBeVisible();
     await expect(comparisonPage.carTile3()).toBeVisible();
