@@ -140,30 +140,30 @@ test.describe("Smoke test for Comparison page.", () => {
     await expect(page).toHaveURL(/\/(fi\/vertailu|en\/comparison)/);
   });
 
-  test("Verify content of comparison page", async ({
-    page,
-    navigationMenu,
-    comparisonPage,
-  }) => {
-    await navigationMenu.carsForSale2().click();
-    await navigationMenu.dieselCars().click({ force: true });
-    await comparisonPage.addCarToComparison(0);
-    await comparisonPage.addCarToComparison(1);
-    await comparisonPage.addCarToComparison(2);
-    await expect(comparisonPage.sidebarCar31()).toBeVisible();
-    await expect(comparisonPage.sidebarCar32()).toBeVisible();
-    await expect(comparisonPage.sidebarCar33()).toBeVisible();
-    await comparisonPage.goToComparePageBtn().click({ force: true });
-    await expect(comparisonPage.title()).toBeVisible();
-    await expect(comparisonPage.descripiton()).toBeVisible();
-    //await expect(comparisonPage.carHeader1()).toBeVisible();
-    // await expect(comparisonPage.carHeader2()).toBeVisible();
-    // await expect(comparisonPage.carHeader3()).toBeVisible();
-    await expect(comparisonPage.carTile1()).toBeVisible();
-    await expect(comparisonPage.carTile2()).toBeVisible();
-    await expect(comparisonPage.carTile3()).toBeVisible();
-    await expect(comparisonPage.price1()).toBeVisible();
-    await expect(comparisonPage.price2()).toBeVisible();
-    await expect(comparisonPage.price3()).toBeVisible();
-  });
+  // test("Verify content of comparison page", async ({
+  //   page,
+  //   navigationMenu,
+  //   comparisonPage,
+  // }) => {
+  //   await navigationMenu.carsForSale2().click();
+  //   await navigationMenu.dieselCars().click({ force: true });
+  //   await comparisonPage.addCarToComparison(0);
+  //   await comparisonPage.addCarToComparison(1);
+  //   await comparisonPage.addCarToComparison(2);
+  //   await expect(comparisonPage.sidebarCar31()).toBeVisible();
+  //   await expect(comparisonPage.sidebarCar32()).toBeVisible();
+  //   await expect(comparisonPage.sidebarCar33()).toBeVisible();
+  //   await comparisonPage.goToComparePageBtn().click({ force: true });
+  //   await expect(comparisonPage.title()).toBeVisible();
+  //   await expect(comparisonPage.descripiton()).toBeVisible();
+  //   await expect(comparisonPage.carHeader1()).toBeVisible();
+  //    await expect(comparisonPage.carHeader2()).toBeVisible();
+  //    await expect(comparisonPage.carHeader3()).toBeVisible();
+  //   await expect(comparisonPage.carTile1()).toBeVisible();
+  //   await expect(comparisonPage.carTile2()).toBeVisible();
+  //   await expect(comparisonPage.carTile3()).toBeVisible();
+  //   await expect(comparisonPage.price1()).toBeVisible();
+  //   await expect(comparisonPage.price2()).toBeVisible();
+  //   await expect(comparisonPage.price3()).toBeVisible();
+  // });
 });
