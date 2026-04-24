@@ -42,7 +42,7 @@ export class CarPage {
   }
 
   financingBtn(): Locator {
-    return this.page.getByRole("button", { name: /Finance/i });
+    return this.page.getByRole("button", { name: "Financing" });
   }
   financingCalc(): Locator {
     return this.page.locator("#finance-calculator-form");
