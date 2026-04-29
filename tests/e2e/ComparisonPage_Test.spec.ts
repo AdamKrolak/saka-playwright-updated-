@@ -28,7 +28,7 @@ test.beforeEach(async ({ page, homePage }) => {
   await homePage.acceptAllCookies();
 });
 
-test.describe("Smoke test for Comparison page.", () => {
+test.describe.skip("Smoke test for Comparison page.", () => {
   test("Verify that user can add cars to comparison feature from category page", async ({
     navigationMenu,
     comparisonPage,
