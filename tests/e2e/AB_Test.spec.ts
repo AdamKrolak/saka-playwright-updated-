@@ -87,7 +87,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await expect(categoryPage.whatsappButton()).toBeVisible();
   });
 
-  test("Test group 2 — Control variant events (flag off) - Phone - Clicking the speech bubble then selecting Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
+  test("Test group 2 — Control variant events (flag off) - Phone - Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
     page,
     categoryPage,
   }) => {
@@ -163,7 +163,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     ).toHaveLength(1);
   });
 
-  test("Test group 2 — Control variant events (flag off) - GTM Event", async ({
+  test("Test group 2 — Control variant events (flag off) - Phone - GTM Event", async ({
     page,
     categoryPage,
   }) => {
@@ -199,6 +199,19 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await expect(categoryPage.bubblePhoneButton()).toBeVisible();
 
     await categoryPage.bubbleWhatsappButton().click();
+
+    await page.waitForFunction(() =>
+      (window as any).dataLayer?.some((e: any) => e.event === "carCardCTA"),
+    );
+
+    const dataLayer: any[] = await page.evaluate(
+      () => (window as any).dataLayer ?? [],
+    );
+    const carCardCTAEvent = dataLayer.find((e) => e.event === "carCardCTA");
+    expect(
+      carCardCTAEvent,
+      "carCardCTA event should exist in dataLayer",
+    ).toBeTruthy();
   });
 
   test("Test group 2 — Control variant events (flag off) - Whatsapp - Clicking the speech bubble then selecting WhatsApp fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
