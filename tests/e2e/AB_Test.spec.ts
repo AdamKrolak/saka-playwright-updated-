@@ -198,10 +198,14 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await categoryPage.speachBubble().first().click();
     await expect(categoryPage.bubblePhoneButton()).toBeVisible();
 
-    await categoryPage.bubbleWhatsappButton().click();
+    await categoryPage.bubblePhoneButton().click();
 
-    await page.waitForFunction(() =>
-      (window as any).dataLayer?.some((e: any) => e.event === "carCardCTA"),
+    await page.waitForFunction(
+      () =>
+        (window as any).dataLayer?.some((e: any) => e.event === "carCardCTA") &&
+        (window as any).dataLayer?.some(
+          (e: any) => e.event === "gtm.linkClick",
+        ),
     );
 
     const dataLayer: any[] = await page.evaluate(
@@ -212,6 +216,20 @@ test.describe("E2E tests for product card CTA event firing", () => {
       carCardCTAEvent,
       "carCardCTA event should exist in dataLayer",
     ).toBeTruthy();
+
+    const gtmLinkClickEvent = dataLayer.find(
+      (e) => e.event === "gtm.linkClick",
+    );
+    expect(
+      gtmLinkClickEvent,
+      "gtm.linkClick event should exist in dataLayer",
+    ).toBeTruthy();
+
+    expect(
+      typeof gtmLinkClickEvent["gtm.elementUrl"] === "string" &&
+        gtmLinkClickEvent["gtm.elementUrl"].startsWith("tel:"),
+      "gtm.linkClick event should have gtm.elementUrl starting with 'tel:' (lead_channel: phone)",
+    ).toBe(true);
   });
 
   test("Test group 2 — Control variant events (flag off) - Whatsapp - Clicking the speech bubble then selecting WhatsApp fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
