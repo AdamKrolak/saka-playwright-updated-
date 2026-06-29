@@ -87,7 +87,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await expect(categoryPage.whatsappButton()).toBeVisible();
   });
 
-  test("Test group 2 — Control variant events (flag off)", async ({
+  test("Test group 2 — Control variant events (flag off) - Clicking the speech bubble then selecting Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
     page,
     categoryPage,
   }) => {
