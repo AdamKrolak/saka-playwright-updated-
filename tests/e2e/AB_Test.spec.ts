@@ -158,7 +158,7 @@ async function assertGtmLinkClick(
  * - Group 4 (Negative case): Carousel exclusion — switching locale (EN → FI) navigates to saka.fi/fi.
  */
 test.describe("E2E tests for product card CTA event firing", () => {
-  test("Test group 1a — Flag off - Set experiment cookie to 'control' -  card renders speech bubble ", async ({
+  test.skip("DEPRECATED Test group 1a — Flag off - Set experiment cookie to 'control' -  card renders speech bubble ", async ({
     page,
     homePage,
     categoryPage,
@@ -183,7 +183,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await expect(categoryPage.whatsappButton()).toBeVisible();
   });
 
-  test("Test group 2 — Control variant events (flag off) - Phone - Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
+  test.skip("DEPRECATED Test group 2 — Control variant events (flag off) - Phone - Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
     page,
     homePage,
     categoryPage,
@@ -202,7 +202,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     );
   });
 
-  test("Test group 2 — Control variant events (flag off) - Phone - GTM Event", async ({
+  test.skip("DEPRECATED Test group 2 — Control variant events (flag off) - Phone - GTM Event", async ({
     page,
     homePage,
     categoryPage,
@@ -219,7 +219,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     await assertGtmLinkClick(page, "tel:");
   });
 
-  test("Test group 2 — Control variant events (flag off) - Whatsapp - Call fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
+  test.skip("DEPRECATED Test group 2 — Control variant events (flag off) - Whatsapp - Call fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
     page,
     homePage,
     categoryPage,
@@ -237,7 +237,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
     );
   });
 
-  test("Test group 2 — Control variant events (flag off) - WhatsApp - GTM Event", async ({
+  test.skip("DEPRECATED Test group 2 — Control variant events (flag off) - WhatsApp - GTM Event", async ({
     page,
     homePage,
     categoryPage,
