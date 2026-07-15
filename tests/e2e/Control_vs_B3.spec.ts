@@ -64,6 +64,16 @@ function isCalculatorInteractionRequest(request: Request): boolean {
   }
 }
 
+/** Returns true when the request is a `financing_offer_form_submitted` analytics call. */
+function isFinancingOfferFormSubmittedRequest(request: Request): boolean {
+  try {
+    const body = JSON.parse(request.postData() ?? "{}");
+    return body.eventName === "financing_offer_form_submitted";
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Runs the given action, waits for the resulting `product_card_lead_event`
  * request, and asserts a single event fired with the expected lead channel.
@@ -245,5 +255,90 @@ test.describe("E2E tests for financing calculator event firing 'calculator_inter
     ).toHaveLength(1);
 
     console.log("✓ calculator_interaction event fired exactly once");
+  });
+
+  test("Control variant - submit finance form after interacting with calculator, verify financing_offer_submission event", async ({
+    page,
+    homePage,
+    carPage,
+  }) => {
+    await setExperimentVariant(page, homePage, "control");
+    await page.evaluate(() => window.scrollTo(0, 1000));
+    await homePage.acceptAllCookies();
+
+    await expect(
+      homePage.homePageMid().getByRole("region").first().getByRole("heading"),
+    ).toBeVisible();
+    await homePage.latestCar1().click({ force: true });
+    await page
+      .locator('[data-test-id="car-finance-calculator-button"]')
+      .click({ force: true });
+    await page
+      .locator('[data-test-id="car-finance-calculator-button"]')
+      .click({ force: true });
+
+    const capturedCalculatorRequests: string[] = [];
+    const calculatorRequestListener = (request: Request) => {
+      if (isCalculatorInteractionRequest(request)) {
+        capturedCalculatorRequests.push(request.postData()!);
+      }
+    };
+    page.on("request", calculatorRequestListener);
+
+    // Set up listener to capture calculator_interaction event
+    const calculatorInteractionPromise = page.waitForRequest(
+      isCalculatorInteractionRequest,
+      { timeout: 15000 },
+    );
+
+    const slider = carPage.calculatorSlider();
+    await slider.scrollIntoViewIfNeeded();
+    await slider.focus();
+    await page.keyboard.press("ArrowLeft");
+    await page.keyboard.press("ArrowLeft");
+    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("ArrowRight");
+
+    await page.waitForTimeout(1000);
+    await carPage.sendFinancingRequestButton().click({ force: true });
+    await carPage.finaceFormName().fill("Test User");
+    await carPage.finaceFormEmail().fill("test@example.com");
+    await carPage.finaceFormPhone().fill("+358701740615");
+    await carPage.checkboxFinaceForm().check();
+
+    // Capture every financing_offer_form_submitted request that fires
+    const capturedSubmitRequests: string[] = [];
+    const submitRequestListener = (request: Request) => {
+      if (isFinancingOfferFormSubmittedRequest(request)) {
+        capturedSubmitRequests.push(request.postData()!);
+      }
+    };
+    page.on("request", submitRequestListener);
+
+    // Set up listener before submitting to capture the submission event
+    const submitRequestPromise = page.waitForRequest(
+      isFinancingOfferFormSubmittedRequest,
+      { timeout: 15000 },
+    );
+
+    await carPage.submitFinaceForm().click();
+
+    // Wait for and verify the financing_offer_form_submitted event
+    const submitRequest = await submitRequestPromise;
+    const submitBody = JSON.parse(submitRequest.postData() ?? "{}");
+
+    expect(submitBody.eventName).toBe("financing_offer_form_submitted");
+
+    // Wait briefly to capture any duplicate events that may fire shortly after
+    await page.waitForTimeout(1000);
+    page.off("request", submitRequestListener);
+
+    // Verify the event fired exactly once — no duplicates
+    expect(
+      capturedSubmitRequests,
+      "Exactly one 'financing_offer_form_submitted' event should fire — no duplicates",
+    ).toHaveLength(1);
+
+    console.log("✓ financing_offer_form_submitted event fired exactly once");
   });
 });
