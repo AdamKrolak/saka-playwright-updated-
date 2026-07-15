@@ -142,11 +142,70 @@ export class CarPage {
       .filter({ has: this.page.locator("h2", { hasText: "Salespeople" }) })
       .locator('[aria-roledescription="carousel"]');
   }
+
+  callButton(): Locator {
+    return this.page.getByRole("link", { name: "Call the seller" });
+  }
+
+  whatupButton(): Locator {
+    return this.page.getByRole("link", { name: "Send a WhatsApp message" });
+  }
+
   salesPeopleFirst(): Locator {
     return this.page
       .locator("section.max-w-\\[1336px\\]")
       .filter({ has: this.page.locator("h2", { hasText: "Salespeople" }) })
       .locator('[role="group"]')
       .first();
+  }
+
+  calculatorSlider(): Locator {
+    return this.page
+      .getByRole("region", { name: "Financing" })
+      .getByRole("slider")
+      .first();
+  }
+
+  /**
+   * A contract-period toggle button (24/36/48/60/72 months) inside the
+   * financing calculator. Clicking one reliably fires a
+   * `calculator_interaction` analytics event.
+   */
+  financingPeriodButton(period: string): Locator {
+    return this.page
+      .getByRole("group", { name: /Contract period/i })
+      .getByRole("button", { name: period, exact: true });
+  }
+
+  sendFinancingRequestButton(): Locator {
+    return this.page.getByRole("button", { name: "Send financing request" });
+  }
+
+  finaceFormName(): Locator {
+    return this.page.getByRole("textbox", { name: "Name*" });
+  }
+
+  finaceFormEmail(): Locator {
+    return this.page.getByRole("textbox", { name: "Email*" });
+  }
+
+  finaceFormPhone(): Locator {
+    return this.page.getByRole("textbox", { name: "Phone number*" });
+  }
+
+  checkboxFinaceForm(): Locator {
+    return this.page.getByRole("checkbox", {
+      name: "I accept the privacy policy*",
+    });
+  }
+
+  submitFinaceForm(): Locator {
+    return this.page.getByRole("button", { name: "Submit" });
+  }
+
+  applyForFinancingDecisionButton(): Locator {
+    return this.page.getByRole("button", {
+      name: "Apply for financing decision",
+    });
   }
 }
