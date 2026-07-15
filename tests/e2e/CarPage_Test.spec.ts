@@ -38,6 +38,15 @@ test.describe("Smoke test for Car page.", () => {
     await expect(carPage.firstGallImage()).toBeVisible();
   });
 
+  test("Verify WhatsApp and phone buttons", async ({
+    categoryPage,
+    carPage,
+  }) => {
+    await categoryPage.car1().click({ force: true });
+    await expect(carPage.callButton()).toBeVisible();
+    await expect(carPage.whatupButton()).toBeVisible();
+  });
+
   test("Verify that name of the car is visible", async ({
     categoryPage,
     carPage,

@@ -1,5 +1,5 @@
 import { test, expect } from "../fixtures/fixtures";
-import type { Page, Request } from "@playwright/test";
+import type { Locator, Page, Request } from "@playwright/test";
 
 test.beforeEach(async ({ page, homePage }) => {
   page.on("pageerror", (err) => {
@@ -103,17 +103,23 @@ async function clickAndAssertLeadEvent(
 }
 
 /**
- * Waits for the GTM `carCardCTA` + `gtm.linkClick` events and asserts the
- * `gtm.elementUrl` starts with the expected scheme for the lead channel.
+ * Waits for the app's `carCardCTA` dataLayer event and asserts the clicked CTA
+ * link points to the expected scheme for the lead channel.
+ *
+ * Note: In Variant B the Phone/WhatsApp CTAs are components that handle the
+ * click in JS and push `carCardCTA` themselves. That handler stops the native
+ * anchor click from bubbling to GTM's built-in link listener, so the
+ * `gtm.linkClick` auto-event is never emitted for these buttons — only
+ * `carCardCTA` is. We therefore assert on `carCardCTA` and read the target URL
+ * from the anchor's `href`.
  */
 async function assertGtmLinkClick(
   page: Page,
+  linkLocator: Locator,
   elementUrlPrefix: string,
 ): Promise<void> {
-  await page.waitForFunction(
-    () =>
-      (window as any).dataLayer?.some((e: any) => e.event === "carCardCTA") &&
-      (window as any).dataLayer?.some((e: any) => e.event === "gtm.linkClick"),
+  await page.waitForFunction(() =>
+    (window as any).dataLayer?.some((e: any) => e.event === "carCardCTA"),
   );
 
   const dataLayer: any[] = await page.evaluate(
@@ -126,16 +132,10 @@ async function assertGtmLinkClick(
     "carCardCTA event should exist in dataLayer",
   ).toBeTruthy();
 
-  const gtmLinkClickEvent = dataLayer.find((e) => e.event === "gtm.linkClick");
+  const href = await linkLocator.getAttribute("href");
   expect(
-    gtmLinkClickEvent,
-    "gtm.linkClick event should exist in dataLayer",
-  ).toBeTruthy();
-
-  expect(
-    typeof gtmLinkClickEvent["gtm.elementUrl"] === "string" &&
-      gtmLinkClickEvent["gtm.elementUrl"].startsWith(elementUrlPrefix),
-    `gtm.linkClick event should have gtm.elementUrl starting with '${elementUrlPrefix}'`,
+    typeof href === "string" && href.startsWith(elementUrlPrefix),
+    `Clicked CTA link should have an href starting with '${elementUrlPrefix}'`,
   ).toBe(true);
 }
 
@@ -216,7 +216,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
 
     await categoryPage.bubblePhoneButton().click();
 
-    await assertGtmLinkClick(page, "tel:");
+    await assertGtmLinkClick(page, categoryPage.bubblePhoneButton(), "tel:");
   });
 
   test.skip("DEPRECATED Test group 2 — Control variant events (flag off) - Whatsapp - Call fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
@@ -250,7 +250,11 @@ test.describe("E2E tests for product card CTA event firing", () => {
 
     await categoryPage.bubbleWhatsappButton().click({ force: true });
 
-    await assertGtmLinkClick(page, "https://wa.me/");
+    await assertGtmLinkClick(
+      page,
+      categoryPage.bubbleWhatsappButton(),
+      "https://wa.me/",
+    );
   });
 
   test("Test group 3 — Variant B events (flag on) - Phone - Call fires `product_card_lead_event` with `lead_channel: phone`", async ({
@@ -282,7 +286,7 @@ test.describe("E2E tests for product card CTA event firing", () => {
 
     await categoryPage.phoneButton().click();
 
-    await assertGtmLinkClick(page, "tel:");
+    await assertGtmLinkClick(page, categoryPage.phoneButton(), "tel:");
   });
 
   test("Test group 3 — Variant B events (flag on)  - Whatsapp - Call fires `product_card_lead_event` with `lead_channel: whatsapp`", async ({
@@ -314,6 +318,10 @@ test.describe("E2E tests for product card CTA event firing", () => {
 
     await categoryPage.whatsappButton().click();
 
-    await assertGtmLinkClick(page, "https://wa.me/");
+    await assertGtmLinkClick(
+      page,
+      categoryPage.whatsappButton(),
+      "https://wa.me/",
+    );
   });
 });
