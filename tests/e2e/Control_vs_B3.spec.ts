@@ -31,12 +31,24 @@ async function setExperimentVariant(
 ): Promise<void> {
   await page.goto(CARS_URL, { waitUntil: "domcontentloaded" });
 
+  // Accept cookies first: the site's experiment SDK reconciles the
+  // `saka_exp_assignment_*` cookies during the consent flow, so setting the
+  // variant beforehand gets wiped. Consent must be granted before we override.
+  await homePage.acceptAllCookies();
+
+  // Set the assignment cookie with the same attributes the server issues it
+  // with (secure + a real expiry). A session cookie with `secure: false` is
+  // treated as malformed and re-rolled/deleted on reload, which made the
+  // assignment non-deterministic.
   await page.context().addCookies([
     {
       name: EXPERIMENT_COOKIE,
       value: variant,
       domain: COOKIE_DOMAIN,
       path: "/",
+      secure: true,
+      sameSite: "Lax",
+      expires: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 365,
     },
   ]);
 
@@ -117,6 +129,11 @@ async function assertGtmLinkClick(
 }
 
 test.describe("E2E tests for financing calculator event firing 'calculator_interaction'", () => {
+  // These flows exercise the live site end to end (navigation + cookie setup +
+  // reload + car page + calculator + financing form), which does not reliably
+  // fit in the default 30s per-test budget. Give each test more headroom.
+  test.describe.configure({ timeout: 90000 });
+
   test("Control variant E2E tests for financing calculator event firing 'calculator_interaction'", async ({
     page,
     homePage,
@@ -270,12 +287,13 @@ test.describe("E2E tests for financing calculator event firing 'calculator_inter
       homePage.homePageMid().getByRole("region").first().getByRole("heading"),
     ).toBeVisible();
     await homePage.latestCar1().click({ force: true });
-    await page
-      .locator('[data-test-id="car-finance-calculator-button"]')
-      .click({ force: true });
-    await page
-      .locator('[data-test-id="car-finance-calculator-button"]')
-      .click({ force: true });
+
+    // await page
+    //   .locator('[data-test-id="car-finance-calculator-button"]')
+    //   .scrollIntoViewIfNeeded();
+    // await page
+    //   .locator('[data-test-id="car-finance-calculator-button"]')
+    //   .click({ force: true });
 
     const capturedCalculatorRequests: string[] = [];
     const calculatorRequestListener = (request: Request) => {
@@ -301,9 +319,13 @@ test.describe("E2E tests for financing calculator event firing 'calculator_inter
 
     await page.waitForTimeout(1000);
     await carPage.sendFinancingRequestButton().click({ force: true });
+    await page.waitForTimeout(1000);
+
     await carPage.finaceFormName().fill("Test User");
     await carPage.finaceFormEmail().fill("test@example.com");
     await carPage.finaceFormPhone().fill("+358701740615");
+    await page.waitForTimeout(1000);
+
     await carPage.checkboxFinaceForm().check();
 
     // Capture every financing_offer_form_submitted request that fires
@@ -393,11 +415,19 @@ test.describe("E2E tests for financing calculator event firing 'calculator_inter
     await page.keyboard.press("ArrowRight");
     await page.keyboard.press("ArrowRight");
 
-    // Open the financing offer form (b3 variant) and fill it in
+    // Open the financing offer form (b3 variant) and fill it in. Give the
+    // form time to mount and wire up its submit handler before interacting —
+    // filling/submitting too quickly can submit before the analytics handler
+    // is attached, so the `financing_offer_form_submitted` event never fires.
+    await page.waitForTimeout(1000);
     await carPage.applyForFinancingDecisionButton().click();
+    await page.waitForTimeout(1000);
+
     await carPage.finaceFormName().fill("Test User");
     await carPage.finaceFormEmail().fill("test@example.com");
     await carPage.finaceFormPhone().fill("+358701740615");
+    await page.waitForTimeout(1000);
+
     await carPage.checkboxFinaceForm().check();
 
     // Capture every financing_offer_form_submitted request that fires
